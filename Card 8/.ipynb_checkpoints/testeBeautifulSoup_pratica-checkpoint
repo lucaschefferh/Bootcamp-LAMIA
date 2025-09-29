@@ -1,0 +1,56 @@
+from bs4 import BeautifulSoup
+
+#Utilizei assim pois estava complicado achar um site para usar de exemplo
+html_string = """
+<html>
+<head>
+    <title>Exemplo de Página de Artigos</title>
+</head>
+<body>
+    <h1>Lista de Artigos</h1>
+    <div class="article">
+        <h2 class="title">Artigo 1</h2>
+        <p class="author">Autor: João Silva</p>
+        <p class="date">Publicado em: 2025-01-25</p>
+        <p class="content">Conteúdo do artigo 1...</p>
+    </div>
+    <div class="article">
+        <h2 class="title">Artigo 2</h2>
+        <p class="author">Autor: Maria Oliveira</p>
+        <p class="date">Publicado em: 2025-01-26</p>
+        <p class="content">Conteúdo do artigo 2...</p>
+    </div>
+    <div class="article">
+        <h2 class="title">Artigo 3</h2>
+        <p class="author">Autor: Pedro Souza</p>
+        <p class="date">Publicado em: 2025-01-27</p>
+        <p class="content">Conteúdo do artigo 3...</p>
+    </div>
+</body>
+</html>
+"""
+
+#acessa o html
+soup = BeautifulSoup(html_string, 'html.parser')
+
+#printa o titulo
+titulo_pagina = soup.title.string
+print("Título da Página:", titulo_pagina)
+
+#printa o texto dentro do h1
+cabecalho = soup.h1.string
+print("Cabeçalho:", cabecalho)
+
+#filtra pela div com classe 'article' e printa tudo la presente
+artigos = soup.find_all('div', class_='article')
+for artigo in artigos:
+    titulo = artigo.find('h2', class_='title').string
+    autor = artigo.find('p', class_='author').string
+    data = artigo.find('p', class_='date').string
+    conteudo = artigo.find('p', class_='content').string
+    
+    print("\nDetalhes do Artigo:")
+    print("Título:", titulo)
+    print("Autor:", autor)
+    print("Data:", data)
+    print("Conteúdo:", conteudo)
